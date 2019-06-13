@@ -1,0 +1,64 @@
+{% extends 'layouts/layout_user.html' %}
+{% from 'bootstrap/wtf.html' import form_field %}
+{% macro render_bootstrap_field(field) %}
+<div class="row">
+    <label class="col-md-4">{{ field.label }}</label>
+    <div class="col-md-8">
+        {{ field(class='form-control')|safe }}
+    </div>
+</div>
+{% endmacro %}
+
+
+{% block title %}
+Settings | {{ config['PUBLIC_CONFIG'].site.title }}
+{% endblock %}
+{% block styles %}
+{{super()}}
+{% endblock %}
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h1 class="panel-title"><a
+                href="{{ url_for('HomeView:index') }}">{{ config['PUBLIC_CONFIG'].site.title }}</a></h1>
+    </div>
+    <div class="panel-body">
+        <div class="container-fluid">
+            <div class="row well">
+                <div class="col-md-8">
+                    <p>{% trans %}Settings{% endtrans %}</p>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ url_for('SubscriberView:profile') }}" role="button" class="btn btn-info">
+                        {% trans %}Profile{% endtrans %}
+                    </a>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ url_for('SubscriberView:logout') }}" class="btn btn-warning" role="button">
+                        {% trans %}Logout{% endtrans %}
+                    </a>
+                </div>
+            </div>
+            <div class="row well">
+                <form action="" method="post" class="form" role="form">
+                    {{ form.hidden_tag() }}
+                    {{ render_bootstrap_field(form.locale) }}
+                    {{ form_field(form.submit, class="btn btn-success") }}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="service_dialog" class="modal fade" tabindex=-1 role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript" charset="utf-8">
+</script>
+{% endblock %}

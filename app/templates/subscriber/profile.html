@@ -1,0 +1,116 @@
+{% extends 'layouts/layout_user.html' %}
+{% block title %}
+Profile | {{ config['PUBLIC_CONFIG'].site.title }}
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h1 class="panel-title"><a
+                href="{{ url_for('HomeView:index') }}">{{ config['PUBLIC_CONFIG'].site.title }}</a></h1>
+    </div>
+    <div class="panel-body">
+        <div class="container-fluid">
+            <div class="row well">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p>{% trans %}Welcome{% endtrans %} {{ current_user.email }}</p>
+                    </div>
+                    <div class="col-md-1">
+                        <a href="{{ url_for('SubscriberView:settings') }}" class="btn btn-info" role="button">
+                            {% trans %}Settings{% endtrans %}
+                        </a>
+                    </div>
+                    <div class="col-md-1">
+                        <a href="{{ url_for('SubscriberView:logout') }}" class="btn btn-warning" role="button">
+                            {% trans %}Logout{% endtrans %}
+                        </a>
+                    </div>
+                    <div class="col-md-1">
+                        <a href="{{ url_for('SubscriberView:remove') }}" class="btn btn-danger" role="button">
+                            {% trans %}Delete{% endtrans %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row well-sm">
+                <div class="row">
+                    <div class="alert alert-success">Nice to see you <strong>{{ current_user.email }}</strong></div>
+                </div>
+            </div>
+            <div class="row well">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            1) Please create device.
+                        </div>
+                        <div class="col-sm-6">
+                            <form action="{{ url_for('SubscriberView:devices') }}" method="get">
+                                <button type="submit" class="btn btn-primary pull-right">Devices</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            2) Choose channels for watching.
+                        </div>
+                        <div class="col-sm-6">
+                            <form action="{{ url_for('SubscriberView:channels') }}" method="get">
+                                <button type="submit" class="btn btn-primary pull-right">My channels</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            3) Build video player for your device.
+                        </div>
+                        <div class="col-sm-6">
+                            <form action="{{ url_for('SubscriberView:build_installer_request') }}" method="get">
+                                <button type="submit" class="btn btn-primary pull-right">Build last
+                                    stable FastoTV version
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <strong>
+                                4) Start application and enjoy watching.
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript"
+        src="{{ url_for('static', filename='assets/js/socket.io/1.7.4/socket.io.min.js') }}"></script>
+<script type="text/javascript" charset="utf-8">
+    function on_total_price_update() {
+        var arr = $('[name=official_channel]');
+        var total = $('#total');
+        var official_ids = $('#official_ids');
+        var sum = 0;
+        var selected_official_id = [];
+        for (var i = 0; i < arr.length; i++) {
+            var checkbox = arr[i];
+            if (checkbox.checked) {
+                sum += parseFloat(checkbox.value);
+                var cid = checkbox.getAttribute('channel_id');
+                selected_official_id.push(cid);
+            }
+        }
+        total.value = sum;
+        official_ids.val(JSON.stringify(selected_official_id));
+    }
+</script>
+{% endblock %}
