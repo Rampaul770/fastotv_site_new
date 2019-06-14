@@ -10,45 +10,97 @@
 {% endblock %}
 
 {% block content %}
-<main>
-    <div class="container">
-        <div class="jumbotron text-center">
-            <div class="col-md-6">
-                <a href={{ url_for('HomeView:signin') }} class="btn btn-warning">Sign In</a>
-            </div>
-            <div class="col-md-6">
-                <a href={{ url_for('HomeView:signup') }} class="btn btn-warning">Sign Up</a>
-            </div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">{{ config['PUBLIC_CONFIG'].site.title}}</a>
         </div>
-        <div>
-            <h1>IPTV/Video cloud admin panel for <a href="https://github.com/fastogt/iptv">server</a></h1>
-            <h2>Features:</h2>
-            <ul>
-                <li>GPU/CPU Encode/Decode/Post Processing</li>
-                <li>Relays</li>
-                <li>Timeshifts</li>
-                <li>Catchups</li>
-                <li>Playlists</li>
-                <li>Mozaic</li>
-                <li>Many Outputs</li>
-                <li>Physical Inputs</li>
-                <li>Streaming Protocols</li>
-                <li>File Formats</li>
-                <li>Presets</li>
-                <li>Vods server-side support</li>
-                <li>HTTP Live Streaming (HLS) server-side support</li>
-                <li>
-                    Public API, client server communication via <a href="https://www.jsonrpc.org/specification">JSON
-                    RPC</a>
-                </li>
-                <li><a href="https://hub.docker.com/r/fastogt/iptv">Docker Image</a></li>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
             </ul>
-            <h2>Visit our client site: <a href="https://fastotv.com">fastotv.com</a></h2>
-            <h2>Connect to our community for realtime help: <a
-                    href="{{ config['PUBLIC_CONFIG'].support.community_channel }}">Community channel</a></h2>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url_for('HomeView:index') }}">Home</a></li>
+                <li><a href="{{ url_for('HomeView:help') }}">How to use</a></li>
+                <li><a href="{{ url_for('HomeView:supported_devices') }}">Supported devices</a></li>
+                <li><a href="{{ url_for('HomeView:broadcasters_help') }}">For broadcasters</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="container">
+    <div class="jumbotron text-center">
+        <h2>{{ config['PUBLIC_CONFIG'].site.small_description }}</h2>
+        <div class="col-md-6">
+            <a href={{ url_for('HomeView:signin') }} class="btn btn-warning">Sign In</a>
+        </div>
+        <div class="col-md-6">
+            <a href={{ url_for('HomeView:signup') }} class="btn btn-warning">Sign Up</a>
         </div>
     </div>
-</main>
+    <div class="well">
+        <div class="row">
+            <h2>What is {{ config['PUBLIC_CONFIG'].site.title }}? </h2>
+            <p>
+                {{ config['PUBLIC_CONFIG'].site.title }} it is iptv platform, for watching TV via internet.
+                Currently we support next
+                platforms:
+            </p>
+            <ul>
+                <li>MacOSX</li>
+                <li>Linux</li>
+                <li>Windows</li>
+                <li>Embedded Linux</li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <p>
+                You can use our player for watching tv channels.
+                Also {{ config['PUBLIC_CONFIG'].site.title }} is open and free IPTV platform.
+            </p>
+            <p>
+                Main big advantages of {{ config['PUBLIC_CONFIG'].site.title }}:
+            </p>
+            <ul>
+                <li style="color:green;">More than 10000 free channels after signup.</li>
+                <li><a href="{{ config['PUBLIC_CONFIG'].project.github.repo }}">Opensource</a></li>
+                <li style="color:red;">Any channel by request, please write to us: <a
+                        href="mailto:{{config['PUBLIC_CONFIG'].support.contact_email }}">{{config['PUBLIC_CONFIG'].support.contact_email
+                    }}</a> and receive 1
+                    channel for test.
+                </li>
+                <li>Own <a href="https://github.com/fastogt/iptv">opensource iptv service</a></li>
+                <li>One remote control for device and TV</li>
+                <li>
+                    Low price devices, you can buy device by your self and install application on it.<br/>
+                    Now we support next <a href="{{ url_for('HomeView:supported_devices') }}"><b> devices</b></a>.
+                </li>
+                <li>Cross-platform</li>
+                <li>Simple code</li>
+                <li><a href="{{ config['PUBLIC_CONFIG'].company.domain }}">Great solutions</a></li>
+            </ul>
+            <p>Looks like:</p>
+            <img src="{{ url_for('static', filename='images/many_chan.png') }}" width="50%">
+            <p>
+                We are waiting for your feedback! Please write any issues and proposals to
+                <a href="{{ config['PUBLIC_CONFIG'].project.github.issues }}">GitHub Issues</a>.
+            </p>
+            <a class="button transparent white" href="{{ url_for('HomeView:help') }}">How to use</a>
+        </div>
+    </div>
+</div>
 <footer>
     <div class="container">
         <div class="jumbotron text-center">

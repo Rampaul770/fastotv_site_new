@@ -64,6 +64,15 @@ class HomeView(FlaskView):
         languages = constants.AVAILABLE_LOCALES_PAIRS
         return render_template('index.html', languages=languages)
 
+    def help(self):
+        return render_template('help.html')
+
+    def supported_devices(self):
+        return render_template('supported_devices.html')
+
+    def broadcasters_help(self):
+        return render_template('broadcasters_help.html')
+
     @route('/robots.txt')
     @route('/sitemap.xml')
     def static_from_root(self):
@@ -96,7 +105,7 @@ class HomeView(FlaskView):
         try:
             email = self._confirm_link_generator.loads(token, salt=HomeView.SALT_LINK,
                                                        max_age=HomeView.CONFIRM_LINK_TTL)
-            confirm_user = SubscriberUser.objects(email=email,class_check=False).first()
+            confirm_user = SubscriberUser.objects(email=email, class_check=False).first()
             if confirm_user:
                 confirm_user.status = SubscriberUser.Status.ACTIVE
                 confirm_user.save()
@@ -141,7 +150,7 @@ class HomeView(FlaskView):
                 flash_error(gettext(u'Invalid email.'))
                 return render_template('home/signup.html', form=form)
 
-            existing_user = SubscriberUser.objects(email=email,class_check=False).first()
+            existing_user = SubscriberUser.objects(email=email, class_check=False).first()
             if existing_user:
                 return redirect(url_for('HomeView:signin'))
 
@@ -169,7 +178,7 @@ class HomeView(FlaskView):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return SubscriberUser.objects(pk=user_id,class_check=False).first()
+    return SubscriberUser.objects(pk=user_id, class_check=False).first()
 
 
 @babel.localeselector
