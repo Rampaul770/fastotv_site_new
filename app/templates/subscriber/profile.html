@@ -54,6 +54,7 @@ Profile | {{ config['PUBLIC_CONFIG'].site.title }}
                             </form>
                         </div>
                     </div>
+                    <br>
                     <div class="row">
                         <div class="col-sm-6">
                             2) Choose channels for watching.
@@ -64,18 +65,35 @@ Profile | {{ config['PUBLIC_CONFIG'].site.title }}
                             </form>
                         </div>
                     </div>
+                    <br>
                     <div class="row">
                         <div class="col-sm-6">
-                            3) Build video player for your device.
+                            3) Add user section into config file: (~/.fastotv/fastotv.ini).
                         </div>
                         <div class="col-sm-6">
-                            <form action="{{ url_for('SubscriberView:build_installer_request') }}" method="get">
-                                <button type="submit" class="btn btn-primary pull-right">Build last
-                                    stable FastoTV version
-                                </button>
-                            </form>
+                            {% if current_user.devices|length == 0 %}
+                            {% else %}
+                            <select class="btn btn-success pull-right" onchange=OnDeviceChanged(this.value);>
+                                {% for device in current_user.devices %}
+                                <option value="{{ device.id }}">{{ device.name }}</option>
+                                {% endfor %}
+                            </select>
+                            {% endif %}
                         </div>
                     </div>
+                    <br>
+                    {% if current_user.devices|length == 0 %}
+                    <div class="alert alert-danger">
+                        To start player you should have at least 1 device, please add it.
+                    </div>
+                    {% else %}
+                    <div class="alert alert-success">
+                        [user_options]<br>
+                        login={{ current_user.email }}<br>
+                        password={{ current_user.password }}<br>
+                        device_id=<span id="device_id">{{current_user.devices[0].id}}</span><br>
+                    </div>
+                    {% endif %}
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <strong>
@@ -95,6 +113,10 @@ Profile | {{ config['PUBLIC_CONFIG'].site.title }}
 <script type="text/javascript"
         src="{{ url_for('static', filename='assets/js/socket.io/1.7.4/socket.io.min.js') }}"></script>
 <script type="text/javascript" charset="utf-8">
+    function OnDeviceChanged(value){
+        var device_id = $('#device_id');
+        device_id.text(value);
+    }
     function on_total_price_update() {
         var arr = $('[name=official_channel]');
         var total = $('#total');
@@ -112,5 +134,12 @@ Profile | {{ config['PUBLIC_CONFIG'].site.title }}
         total.value = sum;
         official_ids.val(JSON.stringify(selected_official_id));
     }
+
+
+
+
+
+
+
 </script>
 {% endblock %}
