@@ -1,5 +1,6 @@
 PUBLIC_CONFIG = {'site': {'title': 'FastoTV', 'keywords': 'video,cloud,iptv,player',
-                          'small_description': 'FastoTV - cross-platform solution for watching tv.'},
+                          'small_description': 'FastoTV - cross-platform solution for watching tv.',
+                          'domain': 'fastotv.com'},
                  'company': {'title': 'FastoGT', 'domain': 'https://fastogt.com'},
                  'support': {'contact_email': 'support@fastogt.com',
                              'contact_address': 'Republic of Belarus, Minsk, Stadionnay str. 5'},

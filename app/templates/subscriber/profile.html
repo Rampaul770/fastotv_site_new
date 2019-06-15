@@ -88,6 +88,8 @@ Profile | {{ config['PUBLIC_CONFIG'].site.title }}
                     </div>
                     {% else %}
                     <div class="alert alert-success">
+                        [server_options]<br>
+                        server={{ config.SUBSCRIBERS_PORTAL_SERVER }}<br>
                         [user_options]<br>
                         login={{ current_user.email }}<br>
                         password={{ current_user.password }}<br>

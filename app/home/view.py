@@ -169,7 +169,7 @@ class HomeView(FlaskView):
                                    contact_email=config['support']['contact_email'], title=config['site']['title'],
                                    company=config['company']['title'])
             msg = Message(subject=gettext(u'Confirm Email'), recipients=[email], html=html)
-            #mail.send(msg)
+            mail.send(msg)
             flash_success(gettext(u'Please check email: {0}.'.format(email)))
             return redirect(url_for('HomeView:signin'))
 
