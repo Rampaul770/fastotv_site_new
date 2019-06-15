@@ -39,7 +39,7 @@ Channels | {{ config['PUBLIC_CONFIG'].site.title }}
                             <td>
                                 <input type="checkbox" name="official_channel" channel_id="{{ stream.id }}"
                                        onclick="on_total_price_update()"
-                                       {% if stream.id in selected_streams %}
+                                       {% if stream in selected_streams %}
                                        checked
                                        {% endif %}
                                 >
