@@ -6,7 +6,7 @@ from flask_babel import gettext
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
 
 import app.common.constants as constants
-from app.common.utils.utils import is_valid_email
+from app.common.utils.utils import is_valid_email, get_country_code_by_remote_addr
 from app import app, mail, login_manager, babel
 from app.home.forms import ContactForm
 from app.common.service.entry import ServiceSettings
@@ -139,7 +139,7 @@ class HomeView(FlaskView):
 
     @route('/signup', methods=['GET', 'POST'])
     def signup(self):
-        form = SignupForm()
+        form = SignupForm(country=get_country_code_by_remote_addr(request.remote_addr))
         if request.method == 'POST':
             if not form.validate_on_submit():
                 flash_error(form.errors)
