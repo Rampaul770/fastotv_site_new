@@ -7,6 +7,7 @@ from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from flask_babel import Babel
 from flask_socketio import SocketIO
+from werkzeug.contrib.fixers import ProxyFix
 
 
 def get_app_folder():
@@ -26,6 +27,7 @@ def init_project(static_folder, *args):
     for file in args:
         app.config.from_pyfile(file, silent=False)
 
+    app.wsgi_app = ProxyFix(app.wsgi_app)
     bootstrap = Bootstrap(app)
     babel = Babel(app)
     db = MongoEngine(app)
