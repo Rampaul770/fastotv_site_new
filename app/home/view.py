@@ -75,6 +75,7 @@ class HomeView(FlaskView):
 
     @route('/robots.txt')
     @route('/sitemap.xml')
+    @route('/ads.txt')
     def static_from_root(self):
         return send_from_directory(app.static_folder, request.path[1:])
 
