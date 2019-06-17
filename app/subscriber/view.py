@@ -5,6 +5,7 @@ from flask_login import login_required, current_user
 from bson.objectid import ObjectId
 from app.common.subscriber.forms import SettingsForm
 from app.common.subscriber.entry import Device
+from app import app
 import json
 
 
@@ -38,6 +39,13 @@ class SubscriberView(FlaskView):
     def devices(self):
         return render_template('subscriber/devices.html')
 
+    @login_required
+    def downloads(self):
+        return render_template('subscriber/downloads.html',
+                               name=app.config['PUBLIC_CONFIG']['player']['name'],
+                               name_lowercase=app.config['PUBLIC_CONFIG']['player']['name_lowercase'],
+                               version=app.config['PUBLIC_CONFIG']['player']['version'])
+
     @route('/add_device', methods=['POST'])
     @login_required
     def add_device(self):
@@ -50,7 +58,6 @@ class SubscriberView(FlaskView):
     def remove_device(self, did):
         current_user.remove_device(did)
         return render_template('subscriber/devices.html')
-
 
     @login_required
     def build_installer_request(self):

@@ -68,7 +68,18 @@ Profile | {{ config['PUBLIC_CONFIG'].site.title }}
                     <br>
                     <div class="row">
                         <div class="col-sm-6">
-                            3) Add user section into config file: (~/.fastotv/fastotv.ini).
+                            3) Download installer
+                        </div>
+                        <div class="col-sm-6">
+                            <form action="{{ url_for('SubscriberView:downloads') }}" method="get">
+                                <button type="submit" class="btn btn-primary pull-right">Downloads</button>
+                            </form>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            4) Add user section into config file: (~/.fastotv/fastotv.ini).
                         </div>
                         <div class="col-sm-6">
                             {% if current_user.devices|length == 0 %}
@@ -99,7 +110,7 @@ Profile | {{ config['PUBLIC_CONFIG'].site.title }}
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <strong>
-                                4) Start application and enjoy watching.
+                                5) Start application and enjoy watching.
                             </strong>
                         </div>
                     </div>

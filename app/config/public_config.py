@@ -6,4 +6,8 @@ PUBLIC_CONFIG = {'site': {'title': 'FastoTV', 'keywords': 'video,cloud,iptv,play
                              'contact_address': 'Republic of Belarus, Minsk, Stadionnay str. 5'},
                  'project': {'version': '1.0.0', 'version_type': 'release',
                              'github': {'issues': 'https://github.com/fastogt/fastotv/issues',
-                                        'repo': 'https://github.com/fastogt/fastotv'}}}
+                                        'repo': 'https://github.com/fastogt/fastotv'}
+                             },
+                 'player': {'name': 'FastoTV', 'name_lowercase': 'fastotv', 'version': '1.5.0',
+                            'version_type': 'release'}
+                 }
