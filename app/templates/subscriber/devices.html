@@ -10,8 +10,9 @@ Devices | {{ config['PUBLIC_CONFIG'].site.title }}
 {% block content %}
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h1 class="panel-title"><a
-                href="{{ url_for('HomeView:index') }}">{{ config['PUBLIC_CONFIG'].site.title }}</a></h1>
+        <h1 class="panel-title">
+            <a href="{{ url_for('HomeView:index') }}">{{ config['PUBLIC_CONFIG'].site.title }}</a>
+        </h1>
     </div>
     <div class="panel-body">
         <div class="container-fluid">
@@ -26,6 +27,7 @@ Devices | {{ config['PUBLIC_CONFIG'].site.title }}
                         <tr>
                             <th>#</th>
                             <th>Name</th>
+                            <th>Max connections</th>
                             <th>Created date</th>
                             <th>Actions</th>
                         </tr>
@@ -35,6 +37,7 @@ Devices | {{ config['PUBLIC_CONFIG'].site.title }}
                         <tr id='{{ device.id }}'>
                             <td>{{ loop.index }}</td>
                             <td>{{ device.name }}</td>
+                            <td>{{ device.connections }}</td>
                             <td>{{ device.created_date }}</td>
                             <td>
                                 <form action="{{ url_for('SubscriberView:remove_device', did=device.id) }}"
@@ -48,7 +51,10 @@ Devices | {{ config['PUBLIC_CONFIG'].site.title }}
                     </table>
                 </div>
                 <form class="form-inline" action="{{ url_for('SubscriberView:add_device') }}" method="post">
-                    <input class="form-control" name="name" placeholder="Name">
+                    <input class="form-control" name="name" placeholder="Name" pattern=".{3,32}" required
+                           title="3 to 32 characters">
+                    <input class="form-control" name="connections" placeholder="Max connections" type="number" step="1"
+                           min="1" max="100">
                     <button type="submit" class="btn btn-success">Add</button>
                 </form>
             </div>
@@ -59,25 +65,4 @@ Devices | {{ config['PUBLIC_CONFIG'].site.title }}
 
 {% block scripts %}
 {{ super() }}
-<script type="text/javascript"
-        src="{{ url_for('static', filename='assets/js/socket.io/1.7.4/socket.io.min.js') }}"></script>
-<script type="text/javascript" charset="utf-8">
-    function on_total_price_update() {
-        var arr = $('[name=official_channel]');
-        var total = $('#total');
-        var official_ids = $('#official_ids');
-        var sum = 0;
-        var selected_official_id = [];
-        for (var i = 0; i < arr.length; i++) {
-            var checkbox = arr[i];
-            if (checkbox.checked) {
-                sum += parseFloat(checkbox.value);
-                var cid = checkbox.getAttribute('channel_id');
-                selected_official_id.push(cid);
-            }
-        }
-        total.value = sum;
-        official_ids.val(JSON.stringify(selected_official_id));
-    }
-</script>
 {% endblock %}
