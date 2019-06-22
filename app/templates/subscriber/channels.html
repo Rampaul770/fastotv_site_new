@@ -34,7 +34,7 @@ Channels | {{ config['PUBLIC_CONFIG'].site.title }}
                         {% for stream in streams %}
                         <tr id='{{ stream.id }}'>
                             <td>{{ loop.index }}</td>
-                            <td><img width="32px" height="32px" src="{{ stream.icon }}"/>{{ stream.name }}</td>
+                            <td><img width="32px" height="32px" src="{{ stream.tv_logo }}"/>{{ stream.name }}</td>
                             <td>{{ stream.group }}</td>
                             <td>
                                 <input type="checkbox" name="official_channel" channel_id="{{ stream.id }}"
@@ -87,8 +87,5 @@ Channels | {{ config['PUBLIC_CONFIG'].site.title }}
         total.value = sum;
         official_ids.val(JSON.stringify(selected_official_id));
     }
-
-
-
 </script>
 {% endblock %}
