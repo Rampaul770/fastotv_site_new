@@ -53,8 +53,8 @@ Devices | {{ config['PUBLIC_CONFIG'].site.title }}
                 <form class="form-inline" action="{{ url_for('SubscriberView:add_device') }}" method="post">
                     <input class="form-control" name="name" placeholder="Name" pattern=".{3,32}" required
                            title="3 to 32 characters">
-                    <input class="form-control" name="connections" placeholder="Max connections" type="number" step="1"
-                           min="1" max="100">
+                    <input class="form-control" name="connections" placeholder="Max connections" type="number" value="1"
+                           step="1" min="1" max="100">
                     <button type="submit" class="btn btn-success">Add</button>
                 </form>
             </div>
