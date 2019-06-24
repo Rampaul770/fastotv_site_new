@@ -27,6 +27,7 @@ Channels | {{ config['PUBLIC_CONFIG'].site.title }}
                             <th class="stream_number">#</th>
                             <th class="stream_name">Name</th>
                             <th class="stream_name">Tags</th>
+                            <th class="stream_name">Price ($)</th>
                             <th class="stream_name">In playlist</th>
                         </tr>
                         </thead>
@@ -36,9 +37,10 @@ Channels | {{ config['PUBLIC_CONFIG'].site.title }}
                             <td>{{ loop.index }}</td>
                             <td><img width="32px" height="32px" src="{{ stream.tvg_logo }}"/>{{ stream.name }}</td>
                             <td>{{ stream.group_title }}</td>
+                            <td>{{ stream.price }}</td>
                             <td>
                                 <input type="checkbox" name="official_channel" channel_id="{{ stream.id }}"
-                                       onclick="on_total_price_update()"
+                                       onclick="on_total_price_update()" value={{ stream.price }}
                                        {% if stream in selected_streams %}
                                        checked
                                        {% endif %}
@@ -51,7 +53,12 @@ Channels | {{ config['PUBLIC_CONFIG'].site.title }}
                 </div>
                 <div class="row">
                     <form class="form-inline" action="{{ url_for('SubscriberView:apply_channels') }}" method="post">
-                        <div class="col-md-12 text-center">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                Price: <input class="form-control" id="total" value=0 disabled> $ per month
+                            </div>
+                        </div>
+                        <div class="col-md-2">
                             <input type="hidden" id="official_ids" class="form-control"
                                    name="apply_channels_official_ids"
                                    value="">
@@ -84,8 +91,13 @@ Channels | {{ config['PUBLIC_CONFIG'].site.title }}
                 selected_official_id.push(cid);
             }
         }
-        total.value = sum;
+        total.val(sum);
         official_ids.val(JSON.stringify(selected_official_id));
     }
+
+    function on_load() {
+        on_total_price_update();
+    }
+    on_load()
 </script>
 {% endblock %}
